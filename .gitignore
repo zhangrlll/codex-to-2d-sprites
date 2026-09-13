@@ -1,0 +1,17 @@
+# Local editor and Python caches
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+
+# Per-character inputs and generated production files
+/assets/
+/motions/
+/outputs/
+/work/
+*.blend1
+
+# Local credentials and environment settings
+.env
+.env.*
+!.env.example

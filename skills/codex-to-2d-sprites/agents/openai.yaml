@@ -1,0 +1,4 @@
+interface:
+  display_name: "3D 模型转 2D 动画素材"
+  short_description: "从角色模型自主完成骨骼、动作、四或八方向抽帧与透明二维素材交付"
+  default_prompt: "使用 $codex-to-2d-sprites，将提供的 3D 模型制作成 4 方向的待机、行走、跑步、翻滚和跳跃透明 2D 动画素材，其余参数自行判断。"
