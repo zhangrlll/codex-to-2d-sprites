@@ -1,312 +1,323 @@
 # codex-to-2d-sprites
 
-**简体中文** | [English](README.en.md)
+**English** | [简体中文](README.zh-CN.md)
 
-协议：[MIT](LICENSE)
+License: [MIT](LICENSE)
 
-**给 Codex 一个 3D 角色模型，让它完成骨骼与动作适配、多方向抽帧、GPT Image 精修和质量复检，生成可用于 2D 游戏的动画素材。**
+**Give Codex a 3D character model and let it handle rigging and motion adaptation, multi-direction rendering, GPT Image refinement, and quality review to produce animation assets for a 2D game.**
 
-支持 4 或 8 个方向，可指定待机、行走、奔跑、翻滚、跳跃等动作。用户负责提供模型与目标，Codex 自行选择参数、编写所需脚本、调用可用工具并处理发现的问题。
+Supports 4 or 8 directions and actions such as idle, walk, run, roll, and jump. You provide the model and the goal; Codex chooses parameters, writes the necessary scripts, uses available tools, and fixes issues it finds.
 
-这是一个供 Codex 执行的工作流 skill。运行时需要能够使用 Blender、图像生成／编辑工具，以及所需的动作来源；仓库本身不附带这些软件、账号或角色模型。
+This is a workflow skill for Codex. It requires access to Blender, image generation/editing tools, and an animation source. The repository does not include those applications, accounts, or character models.
 
-## 实际案例：从一张 GPT 原图，到可操作的 Godot 角色
+## Case study: from a GPT image to a controllable Godot character
 
-**[打开完整展示页：播放录像、切换动图、查看原图 →](https://zhangrlll.github.io/codex-to-2d-sprites/)**
+**[Open the showcase: watch the video, switch animations, and view the original image →](https://zhangrlll.github.io/codex-to-2d-sprites/)**
 
-本案例的完整链路是：**GPT 生成角色原图 → 使用原图在 Tripo AI 生成 3D 模型 → 将模型交给本 Skill → 制作多方向动画素材 → 在 Godot 中操控角色。**
+The complete process for this character was: **Generate a character image with GPT → use that image in Tripo AI to create a 3D model → give the model to this skill → produce multi-direction animation assets → control the character in Godot.**
 
-原图与 Tripo AI 建模是进入 Skill 前的准备阶段。本 Skill 从用户提供的 3D 模型开始，完成骨骼检查与修复、Mixamo 动作适配、Blender 抽帧、GPT Image 精修、校验和重新修改；需要引擎演示时，继续集成 Godot 并检查真实播放与动作衔接。
+Image creation and Tripo AI modeling are preparation steps before using the skill. The skill starts with a supplied 3D model and handles rig inspection and repair, Mixamo motion adaptation, Blender rendering, GPT Image refinement, verification, and revision. When an engine demo is requested, it continues with Godot integration and checks playback and action transitions in the actual scene.
 
-### GPT 生成的原图
+### Original GPT image
 
-<a href="docs/media/gpt-character-original.png"><img src="docs/media/gpt-character-original.png" width="300" alt="GPT 生成的原始角色图：戴眼镜、穿灰色卫衣的黑发男孩"></a>
+<a href="docs/media/gpt-character-original.png"><img src="docs/media/gpt-character-original.png" width="300" alt="Original GPT character image: a boy with black hair, round glasses, and a gray hoodie"></a>
 
-[查看／下载未修改的原始 PNG](docs/media/gpt-character-original.png)。这是用户提供的角色设计原图，也是后续 Tripo AI 模型的外观来源。
+[View or download the unmodified original PNG](docs/media/gpt-character-original.png). This user-supplied character design was the visual source for the subsequent Tripo AI model.
 
-### Godot 场景录像
+### Godot scene recording
 
-[![点击观看 Godot 八方向五动作录像](docs/media/godot-poster.jpg)](https://zhangrlll.github.io/codex-to-2d-sprites/#video)
+[![Watch the Godot recording of eight directions and five actions](docs/media/godot-poster.jpg)](https://zhangrlll.github.io/codex-to-2d-sprites/#video)
 
-**[在线观看完整录像](https://zhangrlll.github.io/codex-to-2d-sprites/#video)** · [MP4 文件](docs/media/godot-eight-directions.mp4)
+**[Watch the full recording online](https://zhangrlll.github.io/codex-to-2d-sprites/#video)** · [MP4 file](docs/media/godot-eight-directions.mp4)
 
-录像约 **1 分 45 秒，30 FPS**，依次展示八个方向的 idle、walk、run、roll、jump，共 40 组，并追加走／跑接翻滚、跳跃的四种衔接。录制方式是用脚本发送按键驱动原有角色控制器，由 Godot Movie Maker 捕获实际场景画面；各个带标题的片段之间重置角色位置。
+The recording runs for approximately **1 minute 45 seconds at 30 FPS**. It shows idle, walk, run, roll, and jump in eight directions—40 combinations—followed by four transitions from walking/running into a roll/jump. A script sends input actions to the existing character controller, and Godot Movie Maker captures the real scene. The character's position is reset between labeled takes.
 
-| 时间 | 录像内容 |
+| Time | Recording chapter |
 | --- | --- |
-| 00:01 | 八方向 Idle 待机与轻微呼吸 |
-| 00:32 | 八方向 Walk 行走 |
-| 00:46 | 八方向 Run 奔跑 |
-| 00:56 | 八方向 Roll 翻滚 |
-| 01:16 | 八方向 Jump 跳跃 |
-| 01:34 | 走／跑接翻滚、跳跃，再恢复移动 |
+| 00:01 | Eight-direction idle with subtle breathing |
+| 00:32 | Eight-direction walk |
+| 00:46 | Eight-direction run |
+| 00:56 | Eight-direction roll |
+| 01:16 | Eight-direction jump |
+| 01:34 | Walk/run into roll/jump, then resume movement |
 
-Godot 场景操作：`WASD` 移动，组合方向键控制斜向，`Shift` 奔跑，`Space` 跳跃，`E` 翻滚，`R` 重置。本页提供的是录像展示，实际操作发生在 Godot 场景中。
+Godot controls: `WASD` to move, combined direction keys for diagonals, `Shift` to run, `Space` to jump, `E` to roll, and `R` to reset. The showcase displays a recording; character input is handled in the Godot scene.
 
-### 八方向动画动图
+### Eight-direction animation GIFs
 
-以下 GIF 来自**当前最终版本的 Godot 精灵渲染**，包含头部稳定和待机呼吸的运行时修正。第一行是 **S、SE、E、NE**，第二行是 **N、NW、W、SW**。
+These GIFs use **the final Godot sprite rendering**, including runtime corrections for head stability and idle breathing. The first row is **S, SE, E, NE**; the second is **N, NW, W, SW**.
 
-**Idle · 待机**
+**Idle**
 
-![八方向 Idle 待机与轻微呼吸](docs/media/idle-8-directions.gif)
+![Eight-direction idle with subtle breathing](docs/media/idle-8-directions.gif)
 
-| Walk · 行走 | Run · 奔跑 |
+| Walk | Run |
 | --- | --- |
-| ![八方向行走](docs/media/walk-8-directions.gif) | ![八方向奔跑](docs/media/run-8-directions.gif) |
-| Roll · 翻滚 | Jump · 跳跃 |
-| ![八方向翻滚](docs/media/roll-8-directions.gif) | ![八方向跳跃](docs/media/jump-8-directions.gif) |
+| ![Eight-direction walk](docs/media/walk-8-directions.gif) | ![Eight-direction run](docs/media/run-8-directions.gif) |
+| Roll | Jump |
+| ![Eight-direction roll](docs/media/roll-8-directions.gif) | ![Eight-direction jump](docs/media/jump-8-directions.gif) |
 
-GIF 带背景，便于观看；正式素材交付使用透明 PNG 和图集。翻滚／跳跃 GIF 展示完整动作，移动中的精简衔接请看录像。模型、Mixamo 下载文件和完整游戏工程不包含在这个 Skill 仓库中。
+GIFs have a background for viewing; production assets use transparent PNGs and sprite sheets. The roll/jump GIFs show the complete actions. See the video for the shortened transitions used during movement. Character models, downloaded Mixamo files, and the complete game project are not included in this skill repository.
 
-[录制脚本与制作方法](examples/recording/README.md) · [40 组动作覆盖与媒体检查记录](examples/recording/verification.json)
+[Recording scripts and instructions](examples/recording/README.md) · [Coverage and media verification for all 40 combinations](examples/recording/verification.json)
 
-## 1. 整个 Skill 的工作流程
+## 1. The skill workflow
 
 ```mermaid
 flowchart TD
-    A[用户提供 3D 模型与目标] --> B[检查模型、材质与骨骼]
-    B --> C[按需绑定或修复骨骼]
-    C --> D[在 Mixamo 选择并适配动作]
-    D --> E[检查动作与身体变形]
-    E --> F[Blender 固定相机与尺度\n渲染多方向动画帧]
-    F --> G[检查底稿并选择关键姿势]
-    G --> H[GPT Image 精修关键帧\n建立角色风格与姿势参考]
-    H --> I[以关键帧为参考\n精修附近其余帧]
-    I --> J[单帧、连续播放与动作切换检查]
-    J --> K{是否通过验收}
-    K -- 是 --> L[输出透明 PNG、图集、预览与源文件]
-    K -- 否 --> M[定位问题并修改受影响部分]
-    M -- 骨骼或动作问题 --> C
-    M -- 相机或抽帧问题 --> F
-    M -- 绘制或一致性问题 --> H
+    A[Provide a 3D model and a goal] --> B[Inspect model, materials, and rig]
+    B --> C[Rig or repair as needed]
+    C --> D[Select and adapt Mixamo motions]
+    D --> E[Check animation and deformation]
+    E --> F[Fix Blender camera and scale\nRender directional animation frames]
+    F --> G[Review source renders and select key poses]
+    G --> H[Refine key frames with GPT Image\nEstablish character and pose references]
+    H --> I[Use approved key frames\nto refine nearby frames]
+    I --> J[Review frames, playback and action transitions]
+    J --> K{Passes acceptance checks?}
+    K -- Yes --> L[Deliver transparent PNGs, sheets, previews, and sources]
+    K -- No --> M[Locate the issue and repair the affected part]
+    M -- Rig or motion --> C
+    M -- Camera or sampling --> F
+    M -- Artwork or consistency --> H
 ```
 
-### ① 接收 3D 模型，检查并绑定骨骼
+### ① Receive the 3D model, inspect it, and prepare the rig
 
-用户提供角色模型和配套贴图，说明希望制作哪些动作、多少方向，以及可选的美术风格。
+Provide the character model and textures, the desired actions and direction count, and an optional art style.
 
-Codex 检查网格、材质、模型朝向、尺寸、骨架层级、蒙皮权重及附件关系，并用抬臂、屈膝、扭身等姿势验证角色是否能正常变形。已经可用的骨架会被复用；缺少骨骼或绑定不适合时，在模型副本上进行绑定、修复或重定向。
+Codex inspects the mesh, materials, orientation, scale, bone hierarchy, skin weights, and attachment relationships. It tests deformation with poses such as raised arms, bent knees, and torso twists. A usable rig is reused; a missing or unsuitable rig is added, repaired, or retargeted on a copy of the model.
 
-眼镜、眼睛、头饰等部件需要跟随正确骨骼。检查既看静态数据，也看实际动作中的变形。原始模型保留，方便回退。
+Glasses, eyes, headwear, and other attachments must follow the correct bones. Review includes both static data and deformation during actual motion. The original model is retained for recovery.
 
-### ② 在 Mixamo 中选择并适配动作
+### ② Select and adapt Mixamo animations
 
-优先复用本角色已有的可用动作；缺少动作时，在 Mixamo 搜索候选动作，并结合模型比例和实际播放结果选择。
+Reuse suitable animations already available for the character first. For missing actions, search Mixamo for candidates and choose based on the model's proportions and actual playback.
 
-例如，短腿角色要检查步幅是否过大，大头角色要检查翻滚时头部是否穿地。动作适配会核对骨架层级、静止姿态、轴向和比例，不仅比较骨骼名称。
+For example, check for excessive stride length on a short-legged character or head penetration into the ground when a large-headed character rolls. Adaptation compares bone hierarchy, rest pose, axes, and scale, as well as bone names.
 
-动作导入后检查脚滑、关节扭曲、手臂塌陷、穿模、起跳与落地，以及循环首尾的连接。必要时修复后复查，保存可切换和播放各动作的模型源文件。
+After importing motion, check foot sliding, twisted joints, collapsed arms, intersections, takeoff and landing, and loop boundaries. Repair and review as needed, then save editable model sources with animations that can be selected and played.
 
-### ③ 在 Blender 中拍摄多方向动画帧
+### ③ Render directional animation frames in Blender
 
-使用固定的正交相机、拍摄角度、灯光、世界比例和公共锚点，通过旋转角色或等价的相机环绕，真实渲染各个方向。
+Use a fixed orthographic camera, viewing angle, lighting, world scale, and shared pivot. Render each direction by rotating the character or moving the camera around it equivalently.
 
-| 方向数量 | 输出行序 |
+| Direction count | Output row order |
 | --- | --- |
-| 4 方向 | S、E、N、W |
-| 8 方向 | S、SE、E、NE、N、NW、W、SW |
+| 4 | S, E, N, W |
+| 8 | S, SE, E, NE, N, NW, W, SW |
 
-S 为正面，E 朝屏幕右，N 为背面，W 朝屏幕左。斜方向分别为右前、右后、左后和左前。拍摄前先验证模型正面和旋转方向，不用镜像代替缺失视角。
+S faces the viewer, E faces screen-right, N faces away, and W faces screen-left. The diagonals are front-right, back-right, back-left, and front-left. Verify the model's front and rotation direction before rendering. Do not substitute mirrored images for missing views.
 
-根据动作节奏采样，保留每帧来源和持续时间。走跑需要按用途分离整体水平位移；跳跃的腾空高度保留。所有帧共用画布与锚点，避免逐帧自动裁切造成位置跳动，也不把下蹲和翻滚强行缩放成站立高度。
+Sample according to the action's timing and retain each frame's source and duration. Separate horizontal root movement for walking/running as appropriate to the intended use; retain the vertical height of a jump. All frames share a canvas and pivot to prevent jitter caused by individual automatic cropping. Do not scale crouching or rolling poses to standing height.
 
-这些 Blender 渲染帧作为后续精修的姿势底稿。
+These Blender renders provide the pose reference for subsequent image refinement.
 
-### ④ 使用 GPT Image 精修关键帧
+### ④ Refine key frames with GPT Image
 
-从各方向、各动作阶段选择有代表性的关键姿势，例如：
+Choose representative poses for each direction and action phase, such as:
 
-- 行走／奔跑：脚底接触、身体经过、腾空等姿势。
-- 跳跃：准备、起跳、最高点和落地。
-- 翻滚：扑身、倒置、支撑和起身。
+- Walk/run: foot contact, passing poses, and airborne phases.
+- Jump: anticipation, takeoff, apex, and landing.
+- Roll: dive, inversion, support, and recovery.
 
-这里的“关键帧”指用于确定画面和风格的代表姿势，不要求用户提前手工标记。
+Here, “key frames” means representative poses used to establish appearance and style. The user does not have to mark them manually in advance.
 
-Codex 调用当前可用的 GPT Image／ImageGen 编辑能力，以对应 3D 帧约束姿势，以用户参考图或建立的角色母版约束身份与风格。先检查关键帧的头部比例、脸、发型、服装、附件、朝向和四肢，再扩大生产。
+Codex uses the available GPT Image/ImageGen editing tool. The corresponding 3D render constrains the pose, while the user's reference or an established character master constrains identity and style. Check head proportions, face, hairstyle, clothing, attachments, orientation, and limbs before expanding production.
 
-### ⑤ 以关键帧为参考，精修附近的其他帧
+### ⑤ Use approved key frames to refine nearby frames
 
-关键帧通过检查后，按动作区段处理附近的其余帧：
+Once key frames pass review, process the remaining nearby frames by action segment:
 
-- **当前帧的 3D 底稿**决定这一帧的姿势、位置和遮挡。
-- **附近已通过的关键帧**提供局部外观与画法参考。
-- **角色风格母版**保持整套素材的身份与比例一致。
+- **The current frame's 3D render** determines its pose, position, and occlusion.
+- **Nearby approved key frames** provide local appearance and drawing references.
+- **The character master** maintains identity and proportions across the complete set.
 
-根据动作复杂度采用单帧或小组编辑，检查相邻小组的连接。出现转头、倒置或复杂遮挡时，增加合适的关键姿势参考。
+Edit individual frames or small groups according to complexity and check the boundaries between groups. Add suitable key-pose references for head turns, inverted poses, or complicated occlusion.
 
-最终要求的每一帧都要完成 2D 风格化。不能只精修几张关键帧，就将其余未经处理的 3D 渲染混入成品；也不能复制关键帧姿势来代替附近的真实动作。
+Every requested final frame must receive the 2D treatment. Do not mix a few refined key frames with untreated 3D renders or copy key-frame poses to replace the real motion in neighboring frames.
 
-### ⑥ 校验、修改，再校验
+### ⑥ Verify, revise, and verify again
 
-视觉验收固定采用 **单帧、连续播放、动作切换** 三种检查方式，覆盖用户要求的全部动作和 4／8 个方向。文件齐全、接触表好看，或一个方向的 GIF 正常，都不能代替完整验收。
+Visual acceptance requires **individual frames, continuous playback, and action transitions**, covering all requested actions and all 4 or 8 directions. Complete files, an attractive contact sheet, or a good GIF in one direction cannot replace this review.
 
-| 检查项目 | 重点 |
+| Review area | What to check |
 | --- | --- |
-| 角色外观一致性 | 跨动作和帧间的发色、肤色、服装颜色统一；发型、袖条、鞋袜及附件不突然改变。 |
-| 头身比例 | 头部大小、脸型、四肢粗细稳定；结合对应 3D 姿势区分透视变化与生成变形。 |
-| 朝向与透视 | 头身朝向合理，转向时不突然换脸或改变发型结构。 |
-| 动作与肢体结构 | 手脚无错位、缺失和非预期穿插，肘膝弯曲自然，翻滚连贯。 |
-| 位置与地面接触 | 站立脚底不漂移，走跑不明显滑步，翻滚不穿地，跳跃有明确腾空与落地。 |
-| 逐帧稳定性 | 头发、轮廓、五官和衣服细节不闪烁、抖动或突然膨胀收缩。 |
-| 节奏与循环接缝 | 动作节奏、预备与缓冲合理，末帧接首帧没有跳变。 |
-| 动作切换 | idle ↔ walk ↔ run，以及跳跃、翻滚前后，外观、比例和位置不突变。 |
-| 透明边缘与游戏内表现 | 黑、白、实际场景背景下无绿边和杂点，正常显示尺寸下清晰且方向易辨。 |
+| Character appearance | Consistent hair, skin, and clothing colors across actions and frames; no sudden changes to hairstyles, sleeve markings, footwear, or accessories. |
+| Body proportions | Stable head size, face shape, and limb thickness; use the corresponding 3D pose to distinguish perspective from generated deformation. |
+| Direction and perspective | Plausible head/body orientation without sudden changes to the face or hairstyle structure when turning. |
+| Motion and anatomy | No misplaced or missing limbs or unintended intersections; natural elbows and knees; coherent rolls. |
+| Position and ground contact | Stable standing feet, no obvious sliding during locomotion or ground penetration during rolls, and clear takeoff and landing. |
+| Frame stability | No flickering, jitter, or sudden expansion and contraction of hair, outlines, facial features, or clothing details. |
+| Timing and loop seams | Appropriate rhythm, anticipation, and recovery, with no jump from the last frame to the first. |
+| Action transitions | Stable appearance, proportions, and position across idle ↔ walk ↔ run and before/after jumps and rolls. |
+| Alpha edges and game presentation | No green fringes or specks against black, white, and the actual scene; readable silhouettes and directions at normal game size. |
 
-检查按以下顺序执行：
+Perform the checks in this order:
 
-1. **对照与单帧**：建立所有动作共用的角色外观基准；把同方向 idle、walk、run 的可比代表帧并排，先检查发色和头身比例，再与对应 3D 底稿比较。加入翻滚／跳跃的关键阶段，并逐一查看全部最终帧。对照图保持相同显示比例，不把各张头部裁片缩成一样大来掩盖问题。
-2. **连续播放**：全部动作 × 方向按真实时序、正常游戏尺寸播放，循环动作至少连续三轮；再慢速和逐帧定位问题，检查邻帧、动作极值、接触帧和循环首尾。
-3. **切换与交互**：覆盖全部请求方向的启停、变向、走跑切换，以及从 idle／walk／run 进入跳跃或翻滚，再回到待机或继续移动；在不同步态阶段触发，并测试动作中松开方向键。Godot 可用时复用当前场景或建立最小验收场景，用输入驱动实际控制器检查。
+1. **Comparison and individual frames:** establish one appearance baseline shared by all actions. Place comparable idle, walk, and run frames from the same direction side by side, check hair color and head proportions first, then compare with their corresponding 3D renders. Include key roll/jump phases and inspect every final frame. Keep the display scale consistent; do not resize head crops independently to hide size drift.
+2. **Continuous playback:** play every action × direction at its real timing and intended game size, repeating looping actions at least three times. Then use slow playback and frame stepping to locate issues, checking neighbors, extreme poses, contact frames, and loop seams.
+3. **Transitions and interaction:** cover every requested direction with starts, stops, turns, walk/run changes, and jumps/rolls entered from idle/walk/run, returning to idle or continued movement. Trigger actions at different gait phases and release movement input during the action. When Godot is available, reuse the scene or build a minimal review scene and drive the real controller with input.
 
-仅做素材任务时无需额外交付完整游戏。Godot 不可用时先用预览检查切换边界，引擎交互明确记为“未验证”；任务若要求 Godot 场景，该部分仍未完成。没有实际场景背景时说明临时背景的替代范围，之后补验。
+An asset-only task does not require delivery of a full game. If Godot is unavailable, check transition boundaries in a preview and mark engine interaction as unverified. A requested Godot scene remains incomplete in that case. If the actual scene background is unavailable, identify the temporary substitute and review the real scene later.
 
-发现问题后回到对应的绑定、动作、渲染或绘制阶段修复，复检受影响帧、邻帧、循环、同方向其他动作及相关切换。统一头框尺寸、冻结所有动作的头部或长时间淡化切换，不是通用修复方法。**交付 PNG／图集与 Godot 最终画面分别验收**，运行时 Shader 不能掩盖源素材缺陷。
+Trace defects to rigging, motion, rendering, or drawing, repair the affected part, and recheck its frames, neighbors, loops, other actions in the same direction, and related transitions. Equalizing every head box, freezing the head in all actions, or using long crossfades is not a general repair method. **Review the delivered PNGs/atlases and final Godot rendering separately**; runtime shaders cannot conceal defects in the source assets.
 
-文件验证另行检查动作／方向／帧数、真实 alpha、公共画布与锚点、图集对应关系、时序、源文件和 ZIP 完整性。图片看起来像棋盘背景不代表透明。无法直接得到真透明时，可按工具规则及用户授权使用纯色背景，再去底、对齐和拼图；底色需要避开角色本身的颜色。
+Separately validate action/direction/frame counts, real alpha, shared canvas and pivot, atlas mappings, timing, source files, and ZIP integrity. A checkerboard-looking background does not prove transparency. If direct generation cannot produce real transparency, use a solid background and then remove it, align frames, and assemble sheets when tool rules and user authorization allow. The key color must not conflict with the character's colors.
 
-保留跨动作对照板、动作 × 方向覆盖、切换的进入／返回状态与触发阶段，以及问题帧、修复前后和复检证据。报告区分“通过／未通过／未验证／不适用”，对应最终交付版本。明显发色跳变、头部膨胀或切换突变不能标为通过；轻微差异如实说明。重复修复无效时换方法，无法继续时说明具体缺口。
+Keep comparison boards, action × direction coverage, transition entry/return states and trigger phases, problem frames, before/after comparisons, and recheck evidence. Record passed, failed, unverified, and not-applicable results against the final delivered version. Obvious color changes, head swelling, or transition pops cannot pass; report minor remaining differences accurately. Change methods when repeated repairs do not help and identify specific gaps when work cannot continue.
 
-完整执行标准见 [动画视觉验收流程](skills/codex-to-2d-sprites/references/visual-qa.md)。
+The skill's detailed execution checklist is in [Animation visual QA](skills/codex-to-2d-sprites/references/visual-qa.md) (Chinese).
 
-### ⑦ 得到最终素材
+### ⑦ Deliver the final assets
 
-通常交付：
+Typical deliverables include:
 
-- 每个动作、每个方向的独立透明 PNG 帧。
-- 动作 Sprite Sheet，以及适合纹理尺寸时的多动作总图集。
-- 包含帧顺序、方向、持续时间、循环属性、锚点和图集坐标的清单。
-- GIF 或可切换动作／方向、暂停、逐帧和调速的 HTML 预览。
-- 带骨骼、动作和贴图的可编辑模型源文件。
-- 实际生成提示词、检查结果、使用说明和 ZIP 素材包。
+- Individual transparent PNG frames for each action and direction.
+- A sprite sheet per action, plus a combined atlas when texture limits allow.
+- A manifest with frame order, directions, durations, loop flags, pivots, and atlas coordinates.
+- GIFs or an HTML preview with action/direction selection, pause, frame stepping, and speed controls.
+- Editable model sources with rig, animations, and textures.
+- Actual generation prompts, review results, usage instructions, and a ZIP asset package.
 
-例如，5 个动作 × 8 个方向 × 每方向 12 帧，会输出 480 张独立帧。输出画布尺寸与 GPT Image 实际生成的插画分辨率会分别记录。
+For example, 5 actions × 8 directions × 12 frames per direction produces 480 individual frames. The output canvas size and the actual illustration resolution generated by GPT Image are recorded separately.
 
-## 2. 整个 Skill 的用法
+## 2. How to use the skill
 
-### 使用前准备
+### Requirements
 
-| 需要的内容 | 说明 |
+| Requirement | Purpose |
 | --- | --- |
-| Codex | 能读取模型所在的工作目录，并执行本地工具。 |
-| Blender | 用于模型检查、骨骼／动作处理和多方向渲染。 |
-| 图像生成与编辑能力 | 当前 Codex 环境需提供可调用的 GPT Image／ImageGen 工具。安装 skill 本身不会自动开通该能力。 |
-| 动作来源 | 可使用已有动作文件；使用 Mixamo 时需具备可访问的浏览器和账号。 |
-| Python 等本地运行环境 | 按需用于图片检查、去底、对齐、切帧和图集组装；具体脚本和参数由 Codex 处理。 |
-| 角色模型与贴图 | 可以提供 Blender 可导入的模型，例如 FBX、GLB／GLTF 或 `.blend`；同时提供关联贴图。 |
+| Codex | Access to the model's working directory and the ability to run local tools. |
+| Blender | Model inspection, rig/motion processing, and multi-direction rendering. |
+| Image generation and editing | The Codex environment must expose a callable GPT Image/ImageGen tool. Installing this skill does not enable that capability by itself. |
+| Animation source | Existing animation files can be used. Mixamo requires an accessible browser and account. |
+| Python or other local runtimes | Used as needed for image inspection, background removal, alignment, frame extraction, and atlas assembly. Codex handles the scripts and parameters. |
+| Character model and textures | A Blender-importable model, such as FBX, GLB/GLTF, or `.blend`, with its associated textures. |
 
-通常只需要准备模型、配套贴图以及一句目标描述。已有动作、风格参考图都可以提供，能减少重复工作。登录、验证码、权限或下载障碍可能需要用户提供最小帮助，其余阶段按工作流自行推进。
+Usually, you only need the model, textures, and a short goal. Existing animations and style references can reduce repeated work. Login, CAPTCHA, permission, or download obstacles may require limited help from you; the other stages proceed according to the workflow.
 
-### 安装
+### Installation
 
-本仓库中的 skill 位于 `skills/codex-to-2d-sprites/`。
+The skill is located at `skills/codex-to-2d-sprites/` in this repository.
 
-**方法一：通过 Codex 安装。** 将下面的指令发送给 Codex：
-
-```text
-使用 $skill-installer，从 GitHub 仓库
-zhangrlll/codex-to-2d-sprites
-安装 skills/codex-to-2d-sprites 目录中的 skill。
-```
-
-**方法二：手动安装。** 下载或克隆仓库，将整个 `skills/codex-to-2d-sprites` 文件夹复制到以下任一位置：
-
-- 个人使用：`~/.agents/skills/codex-to-2d-sprites/`。Windows 对应 `%USERPROFILE%\.agents\skills\codex-to-2d-sprites\`。
-- 仅用于某个项目：`<项目目录>/.agents/skills/codex-to-2d-sprites/`。
-
-确认安装后的文件夹内直接包含 `SKILL.md`，并带有 `references/` 和 `agents/`。Codex 会检测 skill；未显示时可重启后再检查。安装位置与触发机制参考 [OpenAI 官方 Skills 文档](https://learn.chatgpt.com/docs/build-skills)。
-
-### 最简调用
-
-在 Codex 中打开存放模型的项目文件夹，附上模型或填写可访问的路径，然后发送：
+**Option 1: Ask Codex to install it.** Send:
 
 ```text
-使用 $codex-to-2d-sprites。
-
-用这个 3D 模型制作 8 方向的 idle、walk、run、翻滚和跳跃，
-保持角色外观，生成简洁 2D 风格的透明动画素材。
-
-自行检查和修复骨骼、寻找并适配动作、在 Blender 中抽帧，
-先精修关键帧，再以关键帧为参考处理附近的其他帧。
-对照同方向各动作的发色与头身比例，完成单帧、连续播放、
-动作切换三种检查，覆盖全部八方向，发现问题后修改并复查。
-
-最终交付透明 PNG、动作图集、预览、源文件和检查报告。
-其余参数由你判断并执行。
+Use $skill-installer to install the skill at
+skills/codex-to-2d-sprites from the GitHub repository
+zhangrlll/codex-to-2d-sprites.
 ```
 
-### 指定模型、帧数和风格
+**Option 2: Install manually.** Download or clone the repository and copy the entire `skills/codex-to-2d-sprites` folder into either location:
 
-下面路径是示例，使用时替换为实际文件位置。`outputs/` 为相对当前项目的输出目录。
+- Personal use: `~/.agents/skills/codex-to-2d-sprites/`. On Windows: `%USERPROFILE%\.agents\skills\codex-to-2d-sprites\`.
+- One project only: `<project>/.agents/skills/codex-to-2d-sprites/`.
+
+The installed folder must directly contain `SKILL.md`, along with `references/` and `agents/`. Codex detects skills; if it does not appear, restart and check again. See the [official OpenAI Skills documentation](https://learn.chatgpt.com/docs/build-skills) for installation locations and activation.
+
+### Minimal request
+
+Open the project folder containing the model in Codex, attach the model or provide an accessible path, and send:
 
 ```text
-使用 $codex-to-2d-sprites。
+Use $codex-to-2d-sprites.
 
-模型：D:\MyCharacter\character.glb
-风格参考：D:\MyCharacter\style.png
-动作：idle、walk、run、roll、jump
-方向：8
-每个动作每个方向：12 帧
-输出画布：512 × 512
-输出目录：outputs/
+Create idle, walk, run, roll, and jump animations in 8 directions
+from this 3D model. Preserve the character's appearance and produce
+transparent animation assets in a clean 2D style.
 
-保持发型、眼镜、服装和身体比例。
-如果直接生成的背景不是真透明，允许使用与角色颜色不冲突的
-纯色背景，并用脚本去底、对齐、切帧和拼接。
+Inspect and repair the rig, find and adapt suitable motions, and
+render the frames in Blender. Refine the key frames first, then
+use them as references to refine the nearby frames.
+Compare hair colors and head proportions across actions in the same
+direction. Review individual frames, continuous playback, and action
+transitions in all eight directions. Fix issues and check again.
 
-无需我预先写配置或脚本。请完成全部流程，
-交付时说明检查结果及仍存在的外观差异。
+Deliver transparent PNGs, action sheets, previews, editable sources,
+and a review report. Choose the remaining parameters yourself.
 ```
 
-可以只指定某些动作，或者将方向改为 4。未指定时，skill 默认采用 4 方向、512 像素画布、每方向约 12 个关键姿势，以及保留角色身份的简洁 2D 风格。快速或复杂动作会根据连贯性判断是否需要更多采样。
+### Specify a model, frame count, and style
 
-### 继续已有任务或修复问题
+Replace the example paths below with your actual file locations. `outputs/` is relative to the current project.
 
 ```text
-使用 $codex-to-2d-sprites，继续当前项目的制作。
+Use $codex-to-2d-sprites.
 
-先读取已有生产记录，复用已经通过检查的模型、动作和素材。
-先对照不同动作的发色，检查同一动作中的头部大小变化，
-再按视觉验收流程检查单帧、连续播放和动作切换，覆盖全部请求方向。
-分别检查原始 PNG 和引擎画面，不能仅靠 Shader 掩盖素材问题。
-只修改受影响的部分，复检相关邻帧、循环和切换，
-更新素材包，并提交覆盖记录、修复对照和未通过／未验证项。
+Model: D:\MyCharacter\character.glb
+Style reference: D:\MyCharacter\style.png
+Actions: idle, walk, run, roll, jump
+Directions: 8
+Frames per action per direction: 12
+Output canvas: 512 × 512
+Output directory: outputs/
+
+Preserve the hairstyle, glasses, clothing, and body proportions.
+If direct generation does not produce a genuinely transparent background,
+you may use a solid color that does not conflict with the character,
+then use scripts to remove the background, align, split, and assemble frames.
+
+Do not require me to prepare configurations or scripts beforehand.
+Complete the workflow and report the review results and any remaining
+visual differences when you deliver the assets.
 ```
 
-### 如需 Godot 可玩场景
+You can request a subset of actions or change the direction count to 4. When unspecified, the skill defaults to 4 directions, a 512-pixel canvas, approximately 12 key poses per direction, and a clean 2D style that preserves the character's identity. Fast or complex motion may need additional samples based on continuity review.
 
-可以在任务中追加：
+### Continue an existing task or repair an issue
 
 ```text
-素材通过检查后，再接入 Godot 场景。
-WASD 控制八方向行走，Shift 奔跑，Space 跳跃，E 翻滚。
-检查待机呼吸、头部稳定，以及走跑与翻滚／跳跃的衔接。
-根据这次动作的接触帧区分原地和移动触发片段，
-避免站立准备和收尾姿势随角色滑行，最后在引擎中实际播放验证。
+Use $codex-to-2d-sprites to continue production in this project.
+
+Read the existing production records first. Reuse approved models,
+animations, and assets. First compare hair colors across actions and
+check head-size changes within each action. Follow the visual QA process
+for frames, playback, and transitions in every requested direction.
+Review source PNGs and engine rendering separately; do not use shaders
+alone to hide asset defects. Repair affected parts, recheck neighbors,
+loops, and transitions, then update the package. Include coverage,
+before/after comparisons, and any failed or unverified checks.
 ```
 
-Godot 场景属于追加任务，需要当前环境具备 Godot。这个 skill 的基本交付范围是模型到多方向 2D 素材；引擎控制器、动作裁剪、头部稳定和呼吸处理需要针对本次素材实施与验证。运行时 Shader 效果也不会自动烘焙到原始 PNG 中。
+### Add a playable Godot scene
 
-### 仓库结构
+You can append this to your request:
+
+```text
+After the assets pass review, integrate them into a Godot scene.
+Use WASD for eight-direction walking, Shift to run, Space to jump,
+and E to roll. Check idle breathing, head stability, and transitions
+from walking/running into rolls and jumps.
+Use this animation's contact frames to distinguish stationary and
+moving action clips. Prevent standing anticipation and recovery poses
+from sliding with the character. Verify playback in the actual engine.
+```
+
+A Godot scene is an additional task and requires Godot in the environment. The skill's base scope is a 3D model to multi-direction 2D assets. Engine controllers, clip trimming, head stabilization, and breathing must be implemented and verified for the current assets. Runtime shader effects are not automatically baked into the original PNGs.
+
+### Repository layout
 
 ```text
 codex-to-2d-sprites/
-├── README.md                    # 中文说明
-├── README.en.md                 # 英文说明
-├── LICENSE                      # MIT 协议
+├── README.md                    # English (default)
+├── README.zh-CN.md              # Chinese
+├── README.en.md                 # English (legacy URL)
+├── LICENSE                      # MIT license
 ├── .gitignore
 ├── docs/
-│   ├── index.html               # 中文展示页
-│   ├── en.html                  # 英文展示页
+│   ├── index.html               # English showcase (default)
+│   ├── zh-CN.html               # Chinese showcase
+│   ├── en.html                  # English (legacy URL)
 │   ├── site.css
 │   ├── site.js
-│   └── media/                   # 原图、动图和录像
+│   └── media/                   # Original art, GIFs, and recording
 ├── examples/
-│   └── recording/               # 录制脚本与检查记录
+│   └── recording/               # Capture scripts and verification
 └── skills/
     └── codex-to-2d-sprites/
         ├── SKILL.md
-        ├── LICENSE              # 单独安装 Skill 时保留协议
+        ├── LICENSE              # Retained with standalone skill installs
         ├── agents/
         │   └── openai.yaml
         └── references/
@@ -315,12 +326,12 @@ codex-to-2d-sprites/
             └── visual-qa.md
 ```
 
-`SKILL.md` 定义执行步骤和质量门槛；三个参考文件分别处理 Blender／Mixamo、GPT Image／素材交付和动画视觉验收。每个角色的模型、下载动作、生产记录和生成结果放在任务项目中，工作参数由 Codex 按任务生成。
+`SKILL.md` defines the execution stages and quality gates. The three reference files cover Blender/Mixamo, GPT Image/asset delivery, and animation visual QA. Each character's models, downloaded motions, production records, and generated results belong in its task project. Codex generates working parameters for that task.
 
-## 3. 开源协议
+## 3. License
 
-本项目采用 [MIT 协议](LICENSE)，版权声明为 `Copyright (c) 2026 zhangrlll`。授权范围包括本仓库的 Skill、脚本、文档、网页以及项目作者有权许可的示例媒体。
+This project is licensed under the [MIT License](LICENSE), with the notice `Copyright (c) 2026 zhangrlll`. The license covers this repository's skill, scripts, documentation, website, and example media to the extent the project author has the right to license them.
 
-允许使用、修改、分发和商用；分发副本或实质性部分时须保留版权声明与许可文本。项目按现状提供，不作担保，具体以完整协议为准。
+Use, modification, distribution, and commercial use are permitted. Copies or substantial portions must retain the copyright and license notices. The project is provided as is, without warranty; the complete license text governs.
 
-第三方工具、服务、模型及动作资源仍适用其原有条款，本协议不授予项目作者无权许可的第三方权利。单独安装或分发 Skill 时，请保留其目录中的 `LICENSE`。
+Third-party tools, services, models, and animation resources remain subject to their own terms. This license does not grant third-party rights the project author cannot license. Keep the included `LICENSE` when installing or distributing the skill separately.

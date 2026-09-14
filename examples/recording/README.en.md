@@ -1,6 +1,6 @@
 # Godot capture and verification for this case study
 
-**English** | [简体中文](README.md)
+**English** | [简体中文](README.zh-CN.md)
 
 This directory documents how the showcase media was made. The video captures a real Godot 4.6 scene and its character controller. A script calls `Input.action_press()` and `Input.action_release()` to simulate controls, while Movie Maker records the output. The character's position is reset between labeled takes.
 

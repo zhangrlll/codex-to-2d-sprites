@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="从 GPT 角色原图、Tripo AI 3D 模型，到 Codex Skill 制作的八方向动画与 Godot 实际运行录像。">
+  <meta name="theme-color" content="#142a27">
+  <title>一张角色图，到八方向动画 · codex-to-2d-sprites</title>
+  <link rel="alternate" hreflang="zh-CN" href="zh-CN.html">
+  <link rel="alternate" hreflang="en" href="index.html">
+  <link rel="alternate" hreflang="x-default" href="index.html">
+  <link rel="canonical" href="https://zhangrlll.github.io/codex-to-2d-sprites/zh-CN.html">
+  <link rel="stylesheet" href="site.css">
+  <script src="site.js" defer></script>
+</head>
+<body>
+<header><nav class="wrap" aria-label="主导航"><a class="brand" href="#"><span></span>codex-to-2d-sprites</a><div class="links"><a href="#video">录像</a><a href="#animations">动图</a><a class="optional" href="#workflow">工作流</a><a href="https://github.com/zhangrlll/codex-to-2d-sprites">GitHub ↗</a><div class="language-switch" role="group" aria-label="语言"><span aria-current="page">中文</span><a href="index.html" lang="en" hreflang="en" data-language>English</a></div></div></nav></header>
+<main class="wrap">
+  <div class="hero">
+    <div><p class="eyebrow">From character image to playable animation</p><h1>一张角色图，<br>变成<span>八方向动画。</span></h1><p class="lead">GPT 生成角色原图，Tripo AI 将它变成 3D 模型，再交给 Codex Skill 完成动作、抽帧、精修和复检，走进 Godot。</p><div class="actions"><a class="button primary" href="#video">观看 Godot 实际演示 ↓</a><a class="button" href="https://github.com/zhangrlll/codex-to-2d-sprites/blob/main/README.zh-CN.md#2-整个-skill-的用法">使用这个 Skill ↗</a></div><div class="facts"><div><b>8 个方向</b>包含四个斜向</div><div><b>5 种动作</b>40 组动画展示</div><div><b>1 分 45 秒</b>Godot 实际运行录像</div></div></div>
+    <figure class="original"><a href="media/gpt-character-original.png" title="查看 GPT 生成的原图"><img src="media/gpt-character-original.png" width="1086" height="1448" alt="GPT 生成的角色原图：黑发眼镜男孩，灰色卫衣、黑色短裤与运动鞋"></a><figcaption><span>01 / GPT 生成的原图</span><a href="media/gpt-character-original.png" download>下载原图 ↗</a></figcaption></figure>
+  </div>
+  <div class="pipeline" aria-label="完整制作链路"><div class="step"><small>01 / IMAGE</small><h3>GPT 角色原图</h3><p>确定角色外观与比例</p></div><div class="step"><small>02 / MODEL</small><h3>Tripo AI 建模</h3><p>通过原图生成 3D 模型</p></div><div class="step"><small>03 / ANIMATION</small><h3>Codex Skill 制作</h3><p>骨骼 · 动作 · 抽帧 · 精修 · 复检</p></div><div class="step"><small>04 / PLAY</small><h3>Godot 中操控</h3><p>八方向移动与动作衔接</p></div></div>
+  <section id="video" aria-labelledby="video-title">
+    <div class="section-head"><div><span class="badge">GODOT 4.6 · 30 FPS</span><h2 id="video-title">在场景里，看它动起来。</h2></div><p>按方向展示待机、行走、奔跑、翻滚与跳跃，最后演示移动中接翻滚、跳跃的衔接。</p></div>
+    <div class="player"><video id="demo-video" controls playsinline preload="metadata" poster="media/godot-poster.jpg" aria-label="Godot 八方向五动作演示录像"><source src="media/godot-eight-directions.mp4" type="video/mp4">浏览器无法播放时，请<a href="media/godot-eight-directions.mp4">下载 MP4 录像</a>。</video><div class="video-bar"><span>实际 Godot 场景 · 原有角色控制器 · 脚本发送按键</span><a href="media/godot-eight-directions.mp4" download>下载完整 MP4 ↗</a></div></div>
+    <div class="chapters" aria-label="跳转到录像章节"><button data-seek="1.467">Idle 待机 <span>00:01</span></button><button data-seek="32.133">Walk 行走 <span>00:32</span></button><button data-seek="46.8">Run 奔跑 <span>00:46</span></button><button data-seek="56.667">Roll 翻滚 <span>00:56</span></button><button data-seek="76.133">Jump 跳跃 <span>01:16</span></button><button data-seek="94">动作衔接 <span>01:34</span></button></div>
+    <p class="note" id="video-note" aria-live="polite">录像使用 Godot Movie Maker 捕获真实运行画面。每个带标题的展示片段之间重置位置；动作期间由角色控制器驱动。</p>
+    <div class="keys" aria-label="Godot 场景操作说明"><span><kbd>W A S D</kbd>移动 / 组合键斜向</span><span><kbd>Shift</kbd>奔跑</span><span><kbd>Space</kbd>跳跃</span><span><kbd>E</kbd>翻滚</span><span><kbd>R</kbd>重置</span></div>
+  </section>
+  <section id="animations" aria-labelledby="animation-title">
+    <div class="section-head"><div><span class="badge">8 DIRECTIONS × 5 ACTIONS</span><h2 id="animation-title">同一套角色，八个方向。</h2></div><p>动图来自最终 Godot 精灵渲染，包含稳定后的头部与待机呼吸。点击切换动作，可下载各自的 GIF。</p></div>
+    <div class="gallery"><div class="tabs" role="group" aria-label="选择预览动作"><button data-action="idle" aria-pressed="true">Idle 待机</button><button data-action="walk" aria-pressed="false">Walk 行走</button><button data-action="run" aria-pressed="false">Run 奔跑</button><button data-action="roll" aria-pressed="false">Roll 翻滚</button><button data-action="jump" aria-pressed="false">Jump 跳跃</button></div><img id="animation-preview" class="preview" src="media/idle-8-directions.gif" width="1024" height="560" alt="Idle 待机动画：S、SE、E、NE、N、NW、W、SW 八个方向" loading="lazy"><div class="gallery-footer"><p id="animation-note" aria-live="polite">Idle / 固定头部与站姿，胸口轻微呼吸。</p><a id="gif-download" href="media/idle-8-directions.gif" download>下载当前 GIF ↗</a></div></div>
+    <p class="note">第一行：S、SE、E、NE；第二行：N、NW、W、SW。GIF 为带背景的观看预览；生产交付使用透明 PNG 和图集。</p>
+    <noscript><p>查看其他动图：<a href="media/walk-8-directions.gif">行走</a> · <a href="media/run-8-directions.gif">奔跑</a> · <a href="media/roll-8-directions.gif">翻滚</a> · <a href="media/jump-8-directions.gif">跳跃</a></p></noscript>
+  </section>
+  <section class="workflow" id="workflow" aria-labelledby="workflow-title"><div><p class="eyebrow">How this character was made</p><h2 id="workflow-title">从原图到游戏，<br>每一步都有检查。</h2><p>这是本项目角色的制作链路。GPT 原图与 Tripo AI 建模是前置准备；这个 Skill 从提供的 3D 模型开始，组织后续生产和复检。</p><a href="https://github.com/zhangrlll/codex-to-2d-sprites/blob/main/README.zh-CN.md#1-整个-skill-的工作流程">阅读完整工作流 ↗</a></div><ol><li><strong>GPT 原图 → Tripo AI 3D 模型</strong><p>先确定角色设计，再将原图交给 Tripo AI 生成模型，准备模型与贴图。</p></li><li><strong>检查骨骼 → Mixamo 适配动作</strong><p>检查蒙皮和附件，按需修复骨骼，为角色选择合适的常用动作，检查变形、脚滑与穿模。</p></li><li><strong>Blender 固定相机 → 多方向帧动画</strong><p>固定正交相机、尺度和公共锚点，渲染 4 或 8 个真实方向，保留姿势与帧时长。</p></li><li><strong>GPT Image 精修关键帧 → 附近帧</strong><p>先建立角色风格与关键姿势参考，再依照各帧的 3D 底稿精修附近帧，保持身份与动作一致。</p></li><li><strong>单帧 → 连续播放 → 动作切换验收</strong><p>新验收流程先对照同方向各动作的发色与头身比例，再检查全部请求方向的帧、循环和交互；分别核对 PNG 与可用的引擎画面，保留修复前后及覆盖记录。<a href="https://github.com/zhangrlll/codex-to-2d-sprites/blob/main/skills/codex-to-2d-sprites/references/visual-qa.md">查看九项检查标准 ↗</a></p></li><li><strong>最终素材 → Godot 可操作角色</strong><p>导出透明帧和图集，配置八方向 SpriteFrames 与控制器，在实际场景中验证移动、翻滚与跳跃。</p></li></ol></section>
+  <section class="start" id="use"><div><h2>把你的角色交给 Codex。</h2><p>安装 Skill，提供 3D 模型与动作目标。环境需要 Blender、可用的 GPT Image 编辑能力及动作来源。</p><p><a href="https://github.com/zhangrlll/codex-to-2d-sprites/blob/main/README.zh-CN.md#2-整个-skill-的用法">查看安装步骤与完整用法 ↗</a></p></div><div><div class="prompt"><code>$codex-to-2d-sprites</code><br>使用这个 3D 模型，制作 8 方向的 idle、walk、run、roll、jump。完成动作适配、2D 精修和最终复检，再制作可用 WASD 控制的 Godot 演示场景。</div><p class="small">本页展示的是已完成案例。模型、Mixamo 下载文件和完整游戏工程未包含在 Skill 仓库中。</p></div></section>
+</main>
+<footer class="wrap foot"><span>codex-to-2d-sprites · 从 3D 模型到 2D 游戏动画</span><span><a href="https://github.com/zhangrlll/codex-to-2d-sprites/blob/main/LICENSE">MIT 协议</a> · <a href="#">回到顶部 ↑</a> · <a href="https://github.com/zhangrlll/codex-to-2d-sprites/blob/main/examples/recording/README.zh-CN.md">录制脚本与检查记录 ↗</a></span></footer>
+</body>
+</html>

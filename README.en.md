@@ -1,6 +1,6 @@
 # codex-to-2d-sprites
 
-**English** | [简体中文](README.md)
+**English** | [简体中文](README.zh-CN.md)
 
 License: [MIT](LICENSE)
 
@@ -12,7 +12,7 @@ This is a workflow skill for Codex. It requires access to Blender, image generat
 
 ## Case study: from a GPT image to a controllable Godot character
 
-**[Open the showcase: watch the video, switch animations, and view the original image →](https://zhangrlll.github.io/codex-to-2d-sprites/en.html)**
+**[Open the showcase: watch the video, switch animations, and view the original image →](https://zhangrlll.github.io/codex-to-2d-sprites/)**
 
 The complete process for this character was: **Generate a character image with GPT → use that image in Tripo AI to create a 3D model → give the model to this skill → produce multi-direction animation assets → control the character in Godot.**
 
@@ -26,9 +26,9 @@ Image creation and Tripo AI modeling are preparation steps before using the skil
 
 ### Godot scene recording
 
-[![Watch the Godot recording of eight directions and five actions](docs/media/godot-poster.jpg)](https://zhangrlll.github.io/codex-to-2d-sprites/en.html#video)
+[![Watch the Godot recording of eight directions and five actions](docs/media/godot-poster.jpg)](https://zhangrlll.github.io/codex-to-2d-sprites/#video)
 
-**[Watch the full recording online](https://zhangrlll.github.io/codex-to-2d-sprites/en.html#video)** · [MP4 file](docs/media/godot-eight-directions.mp4)
+**[Watch the full recording online](https://zhangrlll.github.io/codex-to-2d-sprites/#video)** · [MP4 file](docs/media/godot-eight-directions.mp4)
 
 The recording runs for approximately **1 minute 45 seconds at 30 FPS**. It shows idle, walk, run, roll, and jump in eight directions—40 combinations—followed by four transitions from walking/running into a roll/jump. A script sends input actions to the existing character controller, and Godot Movie Maker captures the real scene. The character's position is reset between labeled takes.
 
@@ -59,7 +59,7 @@ These GIFs use **the final Godot sprite rendering**, including runtime correctio
 
 GIFs have a background for viewing; production assets use transparent PNGs and sprite sheets. The roll/jump GIFs show the complete actions. See the video for the shortened transitions used during movement. Character models, downloaded Mixamo files, and the complete game project are not included in this skill repository.
 
-[Recording scripts and instructions](examples/recording/README.en.md) · [Coverage and media verification for all 40 combinations](examples/recording/verification.json)
+[Recording scripts and instructions](examples/recording/README.md) · [Coverage and media verification for all 40 combinations](examples/recording/verification.json)
 
 ## 1. The skill workflow
 
@@ -300,13 +300,15 @@ A Godot scene is an additional task and requires Godot in the environment. The s
 
 ```text
 codex-to-2d-sprites/
-├── README.md                    # Chinese
-├── README.en.md                 # English
+├── README.md                    # English (default)
+├── README.zh-CN.md              # Chinese
+├── README.en.md                 # English (legacy URL)
 ├── LICENSE                      # MIT license
 ├── .gitignore
 ├── docs/
-│   ├── index.html               # Chinese showcase
-│   ├── en.html                  # English showcase
+│   ├── index.html               # English showcase (default)
+│   ├── zh-CN.html               # Chinese showcase
+│   ├── en.html                  # English (legacy URL)
 │   ├── site.css
 │   ├── site.js
 │   └── media/                   # Original art, GIFs, and recording
