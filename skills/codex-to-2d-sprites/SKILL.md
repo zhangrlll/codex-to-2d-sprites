@@ -1,6 +1,6 @@
 ---
 name: codex-to-2d-sprites
-description: Use when a user supplies a 3D character and wants 4/8-direction 2D animation frames or sprite sheets, including autonomous rig inspection, Mixamo action adaptation and ImageGen styling. 适用于“给模型做待机、行走、跑步、翻滚、跳跃素材”，以及继续或修复这条生产流程。
+description: Use when a user wants 4/8-direction 2D sprites from a 3D character, or needs to review or repair assets from this pipeline with inconsistent hair colors, changing head size, flicker, or action transitions. 适用于模型转多方向动画，以及已有素材的外观、比例、连续播放和动作切换验收。
 ---
 
 # 3D 模型转 2D 动画素材
@@ -25,11 +25,21 @@ description: Use when a user supplies a 3D character and wants 4/8-direction 2D 
 | 多方向抽帧 | 固定正交相机、灯光、世界比例和公共锚点；画布容纳全部动作极值。真实渲染每个方向，保留 RGBA 底稿、来源帧与持续时间。 |
 | 关键帧精修 | 先选各方向及动作阶段的代表姿势，用 ImageGen 精修并检查，建立人物风格母版与关键姿势参考。关键帧不合格时先修正，再扩展到附近帧。 |
 | 相邻帧精修 | 分段处理关键帧附近的其余输出帧；以每帧对应的 3D 底稿锁定姿势，以母版和附近已通过的关键帧锁定外观。完整覆盖用户要求的最终帧，不能把未处理的 3D 帧混入 2D 成品。 |
-| 复检与交付 | 每个动作、每个方向、每一帧均检查，再看连续播放与循环接缝；脚本检查透明度、完整性、切帧和拼接，输出素材包。 |
+| 视觉验收与返修 | 对照同方向各动作及对应 3D 底稿，逐帧检查后完整播放、测试动作切换；发色/头身比例异常先修复再复查。按请求的全部方向保留检查证据。 |
+| 文件与交付验收 | 校验透明度、完整性、切帧、拼接和时序；核对最终 PNG/图集与实际检查版本一致，交付视觉报告及素材包。 |
 
 骨骼适配、Mixamo 下载、Blender action slot、根运动与地面修复：进入相应阶段时读 [references/blender-mixamo.md](references/blender-mixamo.md)。
 
 风格化提示词、绿幕、工作板拆分、对齐、时序及交付检查：进入相应阶段时读 [references/imagegen-delivery.md](references/imagegen-delivery.md)。
+
+**开始制作验收小样、检查已有素材或最终交付前，必须读取 [references/visual-qa.md](references/visual-qa.md)。** 它定义九项视觉检查、跨动作对照、播放/交互覆盖和返修证据。首次使用时据此建立角色外观基准；最终验收不能仅依赖缩略接触表、单方向 GIF 或脚本数值通过。
+
+## 视觉验收必做项
+
+- **单帧与跨动作对照**：每个请求方向，将 idle/walk/run（有则检查）的代表姿势并排，以统一外观母版检查发色、肤色、服装细节和头身比例；再与各自 3D 底稿核对。翻滚/跳跃按动作阶段加入对照，并检查每一帧。
+- **连续播放**：全部动作 × 请求方向以正常速度完整播放；循环动作至少连续三轮，再用慢速和逐帧检查定位异常。不能把合理透视、遮挡或设计中的形变误判成生成漂移。
+- **动作切换**：在全部请求方向检查启停、变向、idle ↔ walk ↔ run，以及走/跑接跳跃、翻滚并恢复移动。Godot 可用时复用场景或建立最小验收场景；只要素材的任务不扩展为完整游戏。Godot 不可用时做预览切换、记录引擎交互未验证；明确要求 Godot 的交付仍未完成。
+- 检查**交付 PNG/图集**，有可运行的引擎验收场景时另查**引擎最终画面**；保留黑、白及实际场景背景的边缘检查，缺少引擎/场景时按参考流程注明替代范围。运行时 Shader 或缩略显示不能代替源素材修复；明显发色跳变、头部膨胀收缩或切换跳位未修复时，不得标为视觉验收通过。
 
 ## 不变量
 
@@ -43,7 +53,7 @@ description: Use when a user supplies a 3D character and wants 4/8-direction 2D 
 
 发现错误，定位到模型/动作、渲染或绘制阶段，只重做受影响部分；每次重试改变一个明确原因。同一问题经两次有针对性的修复仍无改善时改用另一可用方法；无法继续则保留通过项，报告具体缺口，不无限盲重试或假称完成。
 
-成品必须覆盖用户指定的全部动作、方向和帧数，具备真实透明 PNG、公共画布/锚点、正确顺序和时序、无明显错肢/裁切/穿地，以及实际播放检查。交付独立帧、动作图集、需要时的总图集、时序清单、GIF/可逐帧预览、带动作的源文件和简短使用说明。保存实际提示词与检查记录，区分画布分辨率和生成插画原始分辨率；明确说明尚存的外观差异。
+成品必须覆盖用户指定的全部动作、方向和帧数，具备真实透明 PNG、公共画布/锚点、正确顺序和时序、无明显错肢/裁切/穿地，以及实际播放检查。通常交付独立帧、动作图集、需要时的总图集、时序清单、GIF/可逐帧预览、带动作的源文件和简短使用说明；用户明确限定交付范围时以其要求为准，仍完成适用的质量检查并保留记录。保存实际提示词与检查记录，区分画布分辨率和生成插画原始分辨率；明确说明尚存的外观差异。
 
 调用示例：
 

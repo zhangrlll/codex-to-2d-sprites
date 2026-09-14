@@ -73,7 +73,7 @@ flowchart TD
     F --> G[Review source renders and select key poses]
     G --> H[Refine key frames with GPT Image\nEstablish character and pose references]
     H --> I[Use approved key frames\nto refine nearby frames]
-    I --> J[Review every frame and continuous playback]
+    I --> J[Review frames, playback and action transitions]
     J --> K{Passes acceptance checks?}
     K -- Yes --> L[Deliver transparent PNGs, sheets, previews, and sources]
     K -- No --> M[Locate the issue and repair the affected part]
@@ -139,18 +139,35 @@ Every requested final frame must receive the 2D treatment. Do not mix a few refi
 
 ### ⑥ Verify, revise, and verify again
 
-Final review combines visual inspection, continuous playback, and file validation.
+Visual acceptance requires **individual frames, continuous playback, and action transitions**, covering all requested actions and all 4 or 8 directions. Complete files, an attractive contact sheet, or a good GIF in one direction cannot replace this review.
 
-| Review method | What to check |
+| Review area | What to check |
 | --- | --- |
-| Individual frames | Pose and direction, malformed limbs, missing attachments, intersections, clipping, head proportions, color shifts, and size jitter. |
-| Continuous playback | Timing, foot contact, neighboring-frame continuity, loop boundaries, segment transitions, and unintended pauses. |
-| File validation | Complete action/direction/frame counts, readable files, correct alpha, consistent canvas and pivot, and correct mapping from atlas cells to individual frames. |
-| Delivery validation | Correct timing and loop flags, source files that reopen and play, complete textures, and a valid ZIP. |
+| Character appearance | Consistent hair, skin, and clothing colors across actions and frames; no sudden changes to hairstyles, sleeve markings, footwear, or accessories. |
+| Body proportions | Stable head size, face shape, and limb thickness; use the corresponding 3D pose to distinguish perspective from generated deformation. |
+| Direction and perspective | Plausible head/body orientation without sudden changes to the face or hairstyle structure when turning. |
+| Motion and anatomy | No misplaced or missing limbs or unintended intersections; natural elbows and knees; coherent rolls. |
+| Position and ground contact | Stable standing feet, no obvious sliding during locomotion or ground penetration during rolls, and clear takeoff and landing. |
+| Frame stability | No flickering, jitter, or sudden expansion and contraction of hair, outlines, facial features, or clothing details. |
+| Timing and loop seams | Appropriate rhythm, anticipation, and recovery, with no jump from the last frame to the first. |
+| Action transitions | Stable appearance, proportions, and position across idle ↔ walk ↔ run and before/after jumps and rolls. |
+| Alpha edges and game presentation | No green fringes or specks against black, white, and the actual scene; readable silhouettes and directions at normal game size. |
 
-When an issue appears, trace it to rigging, motion, rendering, or drawing and rework the affected part. A checkerboard-looking background does not prove transparency: inspect the actual alpha channel. If direct generation cannot produce real transparency, use a solid background and then remove it, align frames, and assemble sheets when tool rules and user authorization allow. The key color must not conflict with the character's colors.
+Perform the checks in this order:
 
-Keep review records. Change methods when repeated repairs do not help, and identify the specific missing dependency when work cannot continue. Image generation can vary; passing review does not guarantee absolute pixel consistency. Report remaining differences such as hair strands or clothing folds accurately.
+1. **Comparison and individual frames:** establish one appearance baseline shared by all actions. Place comparable idle, walk, and run frames from the same direction side by side, check hair color and head proportions first, then compare with their corresponding 3D renders. Include key roll/jump phases and inspect every final frame. Keep the display scale consistent; do not resize head crops independently to hide size drift.
+2. **Continuous playback:** play every action × direction at its real timing and intended game size, repeating looping actions at least three times. Then use slow playback and frame stepping to locate issues, checking neighbors, extreme poses, contact frames, and loop seams.
+3. **Transitions and interaction:** cover every requested direction with starts, stops, turns, walk/run changes, and jumps/rolls entered from idle/walk/run, returning to idle or continued movement. Trigger actions at different gait phases and release movement input during the action. When Godot is available, reuse the scene or build a minimal review scene and drive the real controller with input.
+
+An asset-only task does not require delivery of a full game. If Godot is unavailable, check transition boundaries in a preview and mark engine interaction as unverified. A requested Godot scene remains incomplete in that case. If the actual scene background is unavailable, identify the temporary substitute and review the real scene later.
+
+Trace defects to rigging, motion, rendering, or drawing, repair the affected part, and recheck its frames, neighbors, loops, other actions in the same direction, and related transitions. Equalizing every head box, freezing the head in all actions, or using long crossfades is not a general repair method. **Review the delivered PNGs/atlases and final Godot rendering separately**; runtime shaders cannot conceal defects in the source assets.
+
+Separately validate action/direction/frame counts, real alpha, shared canvas and pivot, atlas mappings, timing, source files, and ZIP integrity. A checkerboard-looking background does not prove transparency. If direct generation cannot produce real transparency, use a solid background and then remove it, align frames, and assemble sheets when tool rules and user authorization allow. The key color must not conflict with the character's colors.
+
+Keep comparison boards, action × direction coverage, transition entry/return states and trigger phases, problem frames, before/after comparisons, and recheck evidence. Record passed, failed, unverified, and not-applicable results against the final delivered version. Obvious color changes, head swelling, or transition pops cannot pass; report minor remaining differences accurately. Change methods when repeated repairs do not help and identify specific gaps when work cannot continue.
+
+The skill's detailed execution checklist is in [Animation visual QA](skills/codex-to-2d-sprites/references/visual-qa.md) (Chinese).
 
 ### ⑦ Deliver the final assets
 
@@ -213,7 +230,9 @@ transparent animation assets in a clean 2D style.
 Inspect and repair the rig, find and adapt suitable motions, and
 render the frames in Blender. Refine the key frames first, then
 use them as references to refine the nearby frames.
-Review every frame and continuous playback. Fix issues and check again.
+Compare hair colors and head proportions across actions in the same
+direction. Review individual frames, continuous playback, and action
+transitions in all eight directions. Fix issues and check again.
 
 Deliver transparent PNGs, action sheets, previews, editable sources,
 and a review report. Choose the remaining parameters yourself.
@@ -252,10 +271,13 @@ You can request a subset of actions or change the direction count to 4. When uns
 Use $codex-to-2d-sprites to continue production in this project.
 
 Read the existing production records first. Reuse approved models,
-animations, and assets. Check the changing head size when running right
-and the pause after landing from a jump.
-Only repair the affected parts, then review again and update the
-asset package and review records.
+animations, and assets. First compare hair colors across actions and
+check head-size changes within each action. Follow the visual QA process
+for frames, playback, and transitions in every requested direction.
+Review source PNGs and engine rendering separately; do not use shaders
+alone to hide asset defects. Repair affected parts, recheck neighbors,
+loops, and transitions, then update the package. Include coverage,
+before/after comparisons, and any failed or unverified checks.
 ```
 
 ### Add a playable Godot scene
@@ -298,10 +320,11 @@ codex-to-2d-sprites/
         │   └── openai.yaml
         └── references/
             ├── blender-mixamo.md
-            └── imagegen-delivery.md
+            ├── imagegen-delivery.md
+            └── visual-qa.md
 ```
 
-`SKILL.md` defines the execution stages and quality gates. The two reference files cover Blender/Mixamo and GPT Image/asset delivery. Each character's models, downloaded motions, production records, and generated results belong in its task project. Codex generates working parameters for that task.
+`SKILL.md` defines the execution stages and quality gates. The three reference files cover Blender/Mixamo, GPT Image/asset delivery, and animation visual QA. Each character's models, downloaded motions, production records, and generated results belong in its task project. Codex generates working parameters for that task.
 
 ## 3. License
 
