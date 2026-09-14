@@ -2,6 +2,8 @@
 
 **English** | [简体中文](README.md)
 
+License: [MIT](LICENSE)
+
 **Give Codex a 3D character model and let it handle rigging and motion adaptation, multi-direction rendering, GPT Image refinement, and quality review to produce animation assets for a 2D game.**
 
 Supports 4 or 8 directions and actions such as idle, walk, run, roll, and jump. You provide the model and the goal; Codex chooses parameters, writes the necessary scripts, uses available tools, and fixes issues it finds.
@@ -278,6 +280,7 @@ A Godot scene is an additional task and requires Godot in the environment. The s
 codex-to-2d-sprites/
 ├── README.md                    # Chinese
 ├── README.en.md                 # English
+├── LICENSE                      # MIT license
 ├── .gitignore
 ├── docs/
 │   ├── index.html               # Chinese showcase
@@ -290,6 +293,7 @@ codex-to-2d-sprites/
 └── skills/
     └── codex-to-2d-sprites/
         ├── SKILL.md
+        ├── LICENSE              # Retained with standalone skill installs
         ├── agents/
         │   └── openai.yaml
         └── references/
@@ -298,3 +302,11 @@ codex-to-2d-sprites/
 ```
 
 `SKILL.md` defines the execution stages and quality gates. The two reference files cover Blender/Mixamo and GPT Image/asset delivery. Each character's models, downloaded motions, production records, and generated results belong in its task project. Codex generates working parameters for that task.
+
+## 3. License
+
+This project is licensed under the [MIT License](LICENSE), with the notice `Copyright (c) 2026 zhangrlll`. The license covers this repository's skill, scripts, documentation, website, and example media to the extent the project author has the right to license them.
+
+Use, modification, distribution, and commercial use are permitted. Copies or substantial portions must retain the copyright and license notices. The project is provided as is, without warranty; the complete license text governs.
+
+Third-party tools, services, models, and animation resources remain subject to their own terms. This license does not grant third-party rights the project author cannot license. Keep the included `LICENSE` when installing or distributing the skill separately.

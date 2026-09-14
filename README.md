@@ -2,6 +2,8 @@
 
 **简体中文** | [English](README.en.md)
 
+协议：[MIT](LICENSE)
+
 **给 Codex 一个 3D 角色模型，让它完成骨骼与动作适配、多方向抽帧、GPT Image 精修和质量复检，生成可用于 2D 游戏的动画素材。**
 
 支持 4 或 8 个方向，可指定待机、行走、奔跑、翻滚、跳跃等动作。用户负责提供模型与目标，Codex 自行选择参数、编写所需脚本、调用可用工具并处理发现的问题。
@@ -270,6 +272,7 @@ Godot 场景属于追加任务，需要当前环境具备 Godot。这个 skill �
 codex-to-2d-sprites/
 ├── README.md                    # 中文说明
 ├── README.en.md                 # 英文说明
+├── LICENSE                      # MIT 协议
 ├── .gitignore
 ├── docs/
 │   ├── index.html               # 中文展示页
@@ -282,6 +285,7 @@ codex-to-2d-sprites/
 └── skills/
     └── codex-to-2d-sprites/
         ├── SKILL.md
+        ├── LICENSE              # 单独安装 Skill 时保留协议
         ├── agents/
         │   └── openai.yaml
         └── references/
@@ -290,3 +294,11 @@ codex-to-2d-sprites/
 ```
 
 `SKILL.md` 定义执行步骤和质量门槛；两个参考文件分别处理 Blender／Mixamo 和 GPT Image／素材交付细节。每个角色的模型、下载动作、生产记录和生成结果放在任务项目中，工作参数由 Codex 按任务生成。
+
+## 3. 开源协议
+
+本项目采用 [MIT 协议](LICENSE)，版权声明为 `Copyright (c) 2026 zhangrlll`。授权范围包括本仓库的 Skill、脚本、文档、网页以及项目作者有权许可的示例媒体。
+
+允许使用、修改、分发和商用；分发副本或实质性部分时须保留版权声明与许可文本。项目按现状提供，不作担保，具体以完整协议为准。
+
+第三方工具、服务、模型及动作资源仍适用其原有条款，本协议不授予项目作者无权许可的第三方权利。单独安装或分发 Skill 时，请保留其目录中的 `LICENSE`。
