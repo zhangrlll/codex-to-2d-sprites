@@ -1,5 +1,7 @@
 # codex-to-2d-sprites
 
+**简体中文** | [English](README.en.md)
+
 **给 Codex 一个 3D 角色模型，让它完成骨骼与动作适配、多方向抽帧、GPT Image 精修和质量复检，生成可用于 2D 游戏的动画素材。**
 
 支持 4 或 8 个方向，可指定待机、行走、奔跑、翻滚、跳跃等动作。用户负责提供模型与目标，Codex 自行选择参数、编写所需脚本、调用可用工具并处理发现的问题。
@@ -266,8 +268,17 @@ Godot 场景属于追加任务，需要当前环境具备 Godot。这个 skill �
 
 ```text
 codex-to-2d-sprites/
-├── README.md
+├── README.md                    # 中文说明
+├── README.en.md                 # 英文说明
 ├── .gitignore
+├── docs/
+│   ├── index.html               # 中文展示页
+│   ├── en.html                  # 英文展示页
+│   ├── site.css
+│   ├── site.js
+│   └── media/                   # 原图、动图和录像
+├── examples/
+│   └── recording/               # 录制脚本与检查记录
 └── skills/
     └── codex-to-2d-sprites/
         ├── SKILL.md

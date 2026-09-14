@@ -6,26 +6,13 @@
   <meta name="description" content="从 GPT 角色原图、Tripo AI 3D 模型，到 Codex Skill 制作的八方向动画与 Godot 实际运行录像。">
   <meta name="theme-color" content="#142a27">
   <title>一张角色图，到八方向动画 · codex-to-2d-sprites</title>
-  <style>
-    :root{color-scheme:light;--paper:#f4f5ec;--ink:#19342e;--muted:#627068;--line:#d5dccd;--green:#c8ee93;--dark:#132b27}
-    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:24px}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.7 system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
-    a{color:inherit;text-underline-offset:4px}button,a{-webkit-tap-highlight-color:transparent}button{font:inherit;cursor:pointer}button:focus-visible,a:focus-visible{outline:3px solid #53842b;outline-offset:5px}
-    .wrap{max-width:1160px;margin:auto;padding:0 32px}header{border-bottom:1px solid var(--line)}nav{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:82px}.brand{font-size:15px;font-weight:750;text-decoration:none;letter-spacing:-.3px}.brand span{display:inline-block;width:10px;height:10px;border-radius:50%;background:#689c41;margin-right:10px}nav .links{display:flex;gap:24px;font-size:14px}nav .links a{text-decoration:none}
-    .hero{display:grid;grid-template-columns:1.3fr .7fr;align-items:center;gap:80px;padding:64px 0 58px}.eyebrow{font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:750;color:#58734d;margin:0 0 18px}h1{font-size:clamp(34px,4.3vw,54px);line-height:1.25;letter-spacing:-2px;margin:0 0 24px;font-weight:760}h1 span{color:#658743}.lead{font-size:18px;color:var(--muted);max-width:580px;margin:0 0 25px}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.button{display:inline-flex;align-items:center;justify-content:center;padding:11px 20px;border:1px solid var(--ink);border-radius:7px;text-decoration:none;font-weight:650;font-size:14px}.button.primary{background:var(--ink);color:white}.button:hover{transform:translateY(-1px)}
-    .original{margin:0;position:relative}.original img{display:block;width:100%;max-height:415px;object-fit:contain;border-radius:12px;background:#8a8b8d}.original figcaption{display:flex;justify-content:space-between;gap:12px;font-size:12px;color:var(--muted);padding-top:12px}.facts{display:flex;gap:26px;margin-top:31px;font-size:13px;color:var(--muted)}.facts b{display:block;font-size:23px;line-height:1.4;color:var(--ink);font-weight:700}
-    .pipeline{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:12px;margin-bottom:70px;overflow:hidden}.step{padding:22px 24px;border-right:1px solid var(--line)}.step:last-child{border:0}.step small{font-size:11px;color:#7c9071;letter-spacing:1.3px}.step h3{font-size:17px;margin:5px 0}.step p{font-size:13px;color:var(--muted);margin:0}
-    section{margin-bottom:72px}.section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:22px}h2{font-size:29px;letter-spacing:-.8px;line-height:1.4;margin:0}.section-head p{color:var(--muted);font-size:14px;margin:0;max-width:490px}.badge{display:inline-block;border:1px solid var(--line);border-radius:30px;padding:3px 10px;font-size:11px;letter-spacing:.5px;margin-bottom:12px}
-    .player{overflow:hidden;background:#102126;border-radius:12px;border:1px solid #1f3932;box-shadow:0 16px 38px #183c2810}video{display:block;width:100%;aspect-ratio:8/5;background:#102126}.video-bar{display:flex;justify-content:space-between;gap:20px;padding:14px 20px;color:#b5c8bc;font-size:12px;border-top:1px solid #355049}.video-bar a{color:#d4edb9}.chapters{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}.chapters button,.tabs button{border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:6px;padding:8px 13px;font-size:13px}.chapters button:hover,.tabs button:hover{background:#e6edd9}.chapters button span{color:var(--muted);margin-left:6px;font-size:11px}.note{font-size:13px;color:var(--muted);margin:14px 0 0}
-    .gallery{background:#dce5ce;border:1px solid var(--line);border-radius:12px;overflow:hidden}.tabs{display:flex;gap:6px;flex-wrap:wrap;padding:16px;background:#e9eedf;border-bottom:1px solid #cdd9c0}.tabs button{min-width:102px}.tabs button[aria-pressed="true"]{background:var(--ink);color:white;border-color:var(--ink)}.preview{display:block;width:100%;height:auto;aspect-ratio:1024/560;object-fit:contain}.gallery-footer{display:flex;justify-content:space-between;gap:20px;padding:14px 20px;background:#e9eedf;font-size:13px;color:#53684c}.gallery-footer p{margin:0}.keys{display:flex;gap:20px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:20px}kbd{display:inline-block;font:12px ui-monospace,monospace;color:var(--ink);border:1px solid #cbd5c3;background:white;border-radius:4px;padding:4px 8px;box-shadow:0 2px #dde3d6;margin-right:5px}
-    .workflow{display:grid;grid-template-columns:.7fr 1.3fr;gap:70px;padding:36px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.workflow h2{margin-bottom:16px}.workflow p{color:var(--muted);font-size:14px}.workflow ol{list-style:none;padding:0;margin:0;counter-reset:stage}.workflow li{counter-increment:stage;position:relative;padding:0 0 23px 45px;font-size:14px}.workflow li:last-child{padding-bottom:0}.workflow li:before{content:counter(stage,decimal-leading-zero);position:absolute;left:0;top:0;font-size:12px;color:#739559}.workflow li strong{font-size:15px}.workflow li p{margin:3px 0 0}.workflow a{font-size:14px}
-    .start{background:var(--dark);color:#edf4e6;border-radius:12px;padding:32px 36px;display:grid;grid-template-columns:.8fr 1.2fr;gap:45px}.start h2{font-size:25px}.start p{color:#b6c7b9;font-size:14px;margin-bottom:0}.prompt{border:1px solid #3c5145;background:#1c352e;border-radius:8px;padding:18px 20px;font-size:14px;line-height:1.85}.prompt code{font:inherit;color:#d3eca9}.start a{color:#d3eca9}.small{font-size:12px!important}.foot{padding:0 0 28px;display:flex;justify-content:space-between;gap:20px;font-size:12px;color:var(--muted)}
-    @media(max-width:800px){.wrap{padding:0 22px}.hero{gap:30px;grid-template-columns:1.15fr .85fr;padding:42px 0}.lead{font-size:16px}.facts{gap:18px}.pipeline{grid-template-columns:repeat(2,1fr);margin-bottom:48px}.step:nth-child(2){border-right:0}.step:nth-child(-n+2){border-bottom:1px solid var(--line)}.workflow{gap:32px}.start{gap:25px;padding:28px}.section-head{align-items:start}.section-head p{max-width:360px}section{margin-bottom:50px}}
-    @media(max-width:570px){.wrap{padding:0 18px}nav{min-height:70px;gap:10px}.brand{font-size:12px}nav .links{gap:12px;font-size:12px}nav .links .optional{display:none}.hero{grid-template-columns:1fr;gap:32px;padding:34px 0}.original{max-width:300px;margin:auto}.original img{max-height:350px}.facts{justify-content:space-between}.pipeline{margin-bottom:44px}.step{padding:16px}.step h3{font-size:15px}.section-head{display:block}.section-head p{margin-top:10px}h2{font-size:25px}.video-bar{padding:12px;flex-wrap:wrap;gap:5px}.chapters button{padding:7px 9px}.tabs{padding:10px;gap:5px}.tabs button{min-width:0;padding:8px 10px}.gallery-footer{padding:12px;display:block}.gallery-footer a{display:inline-block;margin-top:6px}.keys{gap:12px}.workflow,.start{grid-template-columns:1fr;gap:24px}.start{padding:24px}.foot{flex-direction:column;gap:4px}h1{letter-spacing:-1px}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.button:hover{transform:none}}
-  </style>
+  <link rel="alternate" hreflang="zh-CN" href="index.html">
+  <link rel="alternate" hreflang="en" href="en.html">
+  <link rel="stylesheet" href="site.css">
+  <script src="site.js" defer></script>
 </head>
 <body>
-<header><nav class="wrap" aria-label="主导航"><a class="brand" href="#"><span></span>codex-to-2d-sprites</a><div class="links"><a href="#video">录像</a><a href="#animations">动图</a><a class="optional" href="#workflow">工作流</a><a href="https://github.com/zhangrlll/codex-to-2d-sprites">GitHub ↗</a></div></nav></header>
+<header><nav class="wrap" aria-label="主导航"><a class="brand" href="#"><span></span>codex-to-2d-sprites</a><div class="links"><a href="#video">录像</a><a href="#animations">动图</a><a class="optional" href="#workflow">工作流</a><a href="https://github.com/zhangrlll/codex-to-2d-sprites">GitHub ↗</a><div class="language-switch" role="group" aria-label="语言"><span aria-current="page">中文</span><a href="en.html" lang="en" hreflang="en" data-language>English</a></div></div></nav></header>
 <main class="wrap">
   <div class="hero">
     <div><p class="eyebrow">From character image to playable animation</p><h1>一张角色图，<br>变成<span>八方向动画。</span></h1><p class="lead">GPT 生成角色原图，Tripo AI 将它变成 3D 模型，再交给 Codex Skill 完成动作、抽帧、精修和复检，走进 Godot。</p><div class="actions"><a class="button primary" href="#video">观看 Godot 实际演示 ↓</a><a class="button" href="https://github.com/zhangrlll/codex-to-2d-sprites#2-整个-skill-的用法">使用这个 Skill ↗</a></div><div class="facts"><div><b>8 个方向</b>包含四个斜向</div><div><b>5 种动作</b>40 组动画展示</div><div><b>1 分 45 秒</b>Godot 实际运行录像</div></div></div>
@@ -49,27 +36,5 @@
   <section class="start" id="use"><div><h2>把你的角色交给 Codex。</h2><p>安装 Skill，提供 3D 模型与动作目标。环境需要 Blender、可用的 GPT Image 编辑能力及动作来源。</p><p><a href="https://github.com/zhangrlll/codex-to-2d-sprites#2-整个-skill-的用法">查看安装步骤与完整用法 ↗</a></p></div><div><div class="prompt"><code>$codex-to-2d-sprites</code><br>使用这个 3D 模型，制作 8 方向的 idle、walk、run、roll、jump。完成动作适配、2D 精修和最终复检，再制作可用 WASD 控制的 Godot 演示场景。</div><p class="small">本页展示的是已完成案例。模型、Mixamo 下载文件和完整游戏工程未包含在 Skill 仓库中。</p></div></section>
 </main>
 <footer class="wrap foot"><span>codex-to-2d-sprites · 从 3D 模型到 2D 游戏动画</span><span><a href="#">回到顶部 ↑</a> · <a href="https://github.com/zhangrlll/codex-to-2d-sprites/tree/main/examples/recording">录制脚本与检查记录 ↗</a></span></footer>
-<script>
-  const video = document.getElementById('demo-video');
-  for (const button of document.querySelectorAll('[data-seek]')) {
-    button.addEventListener('click', () => {
-      const seek = () => { video.currentTime = Number(button.dataset.seek); video.play().catch(() => { document.getElementById('video-note').textContent = '已跳转到所选章节，点击视频播放按钮即可观看。'; }); };
-      if (video.readyState >= 1) seek(); else { video.addEventListener('loadedmetadata', seek, {once: true}); video.load(); }
-    });
-  }
-  const names = {idle:'Idle 待机',walk:'Walk 行走',run:'Run 奔跑',roll:'Roll 翻滚',jump:'Jump 跳跃'};
-  const notes = {idle:'Idle / 固定头部与站姿，胸口轻微呼吸。',walk:'Walk / 八方向步态，稳定头部比例与颈部连接。',run:'Run / 八方向奔跑，保留原始动作节奏。',roll:'Roll / 完整翻滚动作；移动中的精简衔接见录像。',jump:'Jump / 起跳、腾空与落地；移动中的精简衔接见录像。'};
-  for (const button of document.querySelectorAll('[data-action]')) {
-    button.addEventListener('click', () => {
-      const action = button.dataset.action;
-      for (const item of document.querySelectorAll('[data-action]')) item.setAttribute('aria-pressed', String(item === button));
-      const preview = document.getElementById('animation-preview');
-      preview.src = `media/${action}-8-directions.gif`;
-      preview.alt = `${names[action]}动画：S、SE、E、NE、N、NW、W、SW 八个方向`;
-      document.getElementById('animation-note').textContent = notes[action];
-      document.getElementById('gif-download').href = preview.src;
-    });
-  }
-</script>
 </body>
 </html>

@@ -1,5 +1,7 @@
 # 本案例的 Godot 录制与检查
 
+**简体中文** | [English](README.en.md)
+
 本目录记录展示页媒体的制作方法。录像来自 Godot 4.6 的真实场景与角色控制器，使用脚本调用 `Input.action_press()` / `Input.action_release()` 模拟操作，再通过 Movie Maker 输出；按标题切换展示片段时重置角色位置。
 
 - `record_github_showcase.gd`：逐一展示 8 个方向 × 5 种动作，再演示走／跑接翻滚、跳跃的 4 种组合。
