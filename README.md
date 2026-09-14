@@ -6,6 +6,57 @@
 
 这是一个供 Codex 执行的工作流 skill。运行时需要能够使用 Blender、图像生成／编辑工具，以及所需的动作来源；仓库本身不附带这些软件、账号或角色模型。
 
+## 实际案例：从一张 GPT 原图，到可操作的 Godot 角色
+
+**[打开完整展示页：播放录像、切换动图、查看原图 →](https://zhangrlll.github.io/codex-to-2d-sprites/)**
+
+本案例的完整链路是：**GPT 生成角色原图 → 使用原图在 Tripo AI 生成 3D 模型 → 将模型交给本 Skill → 制作多方向动画素材 → 在 Godot 中操控角色。**
+
+原图与 Tripo AI 建模是进入 Skill 前的准备阶段。本 Skill 从用户提供的 3D 模型开始，完成骨骼检查与修复、Mixamo 动作适配、Blender 抽帧、GPT Image 精修、校验和重新修改；需要引擎演示时，继续集成 Godot 并检查真实播放与动作衔接。
+
+### GPT 生成的原图
+
+<a href="docs/media/gpt-character-original.png"><img src="docs/media/gpt-character-original.png" width="300" alt="GPT 生成的原始角色图：戴眼镜、穿灰色卫衣的黑发男孩"></a>
+
+[查看／下载未修改的原始 PNG](docs/media/gpt-character-original.png)。这是用户提供的角色设计原图，也是后续 Tripo AI 模型的外观来源。
+
+### Godot 场景录像
+
+[![点击观看 Godot 八方向五动作录像](docs/media/godot-poster.jpg)](https://zhangrlll.github.io/codex-to-2d-sprites/#video)
+
+**[在线观看完整录像](https://zhangrlll.github.io/codex-to-2d-sprites/#video)** · [MP4 文件](docs/media/godot-eight-directions.mp4)
+
+录像约 **1 分 45 秒，30 FPS**，依次展示八个方向的 idle、walk、run、roll、jump，共 40 组，并追加走／跑接翻滚、跳跃的四种衔接。录制方式是用脚本发送按键驱动原有角色控制器，由 Godot Movie Maker 捕获实际场景画面；各个带标题的片段之间重置角色位置。
+
+| 时间 | 录像内容 |
+| --- | --- |
+| 00:01 | 八方向 Idle 待机与轻微呼吸 |
+| 00:32 | 八方向 Walk 行走 |
+| 00:46 | 八方向 Run 奔跑 |
+| 00:56 | 八方向 Roll 翻滚 |
+| 01:16 | 八方向 Jump 跳跃 |
+| 01:34 | 走／跑接翻滚、跳跃，再恢复移动 |
+
+Godot 场景操作：`WASD` 移动，组合方向键控制斜向，`Shift` 奔跑，`Space` 跳跃，`E` 翻滚，`R` 重置。本页提供的是录像展示，实际操作发生在 Godot 场景中。
+
+### 八方向动画动图
+
+以下 GIF 来自**当前最终版本的 Godot 精灵渲染**，包含头部稳定和待机呼吸的运行时修正。第一行是 **S、SE、E、NE**，第二行是 **N、NW、W、SW**。
+
+**Idle · 待机**
+
+![八方向 Idle 待机与轻微呼吸](docs/media/idle-8-directions.gif)
+
+| Walk · 行走 | Run · 奔跑 |
+| --- | --- |
+| ![八方向行走](docs/media/walk-8-directions.gif) | ![八方向奔跑](docs/media/run-8-directions.gif) |
+| Roll · 翻滚 | Jump · 跳跃 |
+| ![八方向翻滚](docs/media/roll-8-directions.gif) | ![八方向跳跃](docs/media/jump-8-directions.gif) |
+
+GIF 带背景，便于观看；正式素材交付使用透明 PNG 和图集。翻滚／跳跃 GIF 展示完整动作，移动中的精简衔接请看录像。模型、Mixamo 下载文件和完整游戏工程不包含在这个 Skill 仓库中。
+
+[录制脚本与制作方法](examples/recording/README.md) · [40 组动作覆盖与媒体检查记录](examples/recording/verification.json)
+
 ## 1. 整个 Skill 的工作流程
 
 ```mermaid

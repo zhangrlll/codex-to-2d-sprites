@@ -1,0 +1,1186 @@
+{
+  "engine": "Godot 4.6 stable",
+  "recording_method": "Godot Movie Maker, actual main scene driven by Input actions",
+  "rendered_video": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "codec_name": "h264",
+        "width": 1152,
+        "height": 720,
+        "pix_fmt": "yuvj420p",
+        "r_frame_rate": "30/1",
+        "nb_frames": "3154"
+      }
+    ],
+    "format": {
+      "duration": "105.133333",
+      "size": "2556194"
+    }
+  },
+  "coverage": [
+    {
+      "action": "idle",
+      "direction": "S",
+      "recorded_frames": 113,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "speed_range": [
+        0.0,
+        0.0
+      ],
+      "breath_pixel_range": [
+        0.0,
+        2.4
+      ]
+    },
+    {
+      "action": "idle",
+      "direction": "SE",
+      "recorded_frames": 113,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "speed_range": [
+        0.0,
+        0.0
+      ],
+      "breath_pixel_range": [
+        0.0,
+        2.4
+      ]
+    },
+    {
+      "action": "idle",
+      "direction": "E",
+      "recorded_frames": 113,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "speed_range": [
+        0.0,
+        0.0
+      ],
+      "breath_pixel_range": [
+        0.0,
+        2.4
+      ]
+    },
+    {
+      "action": "idle",
+      "direction": "NE",
+      "recorded_frames": 113,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "speed_range": [
+        0.0,
+        0.0
+      ],
+      "breath_pixel_range": [
+        0.0,
+        2.4
+      ]
+    },
+    {
+      "action": "idle",
+      "direction": "N",
+      "recorded_frames": 113,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "speed_range": [
+        0.0,
+        0.0
+      ],
+      "breath_pixel_range": [
+        0.0,
+        2.4
+      ]
+    },
+    {
+      "action": "idle",
+      "direction": "NW",
+      "recorded_frames": 113,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "speed_range": [
+        0.0,
+        0.0
+      ],
+      "breath_pixel_range": [
+        0.0,
+        2.4
+      ]
+    },
+    {
+      "action": "idle",
+      "direction": "W",
+      "recorded_frames": 113,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "speed_range": [
+        0.0,
+        0.0
+      ],
+      "breath_pixel_range": [
+        0.0,
+        2.4
+      ]
+    },
+    {
+      "action": "idle",
+      "direction": "SW",
+      "recorded_frames": 113,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "speed_range": [
+        0.0,
+        0.0
+      ],
+      "breath_pixel_range": [
+        0.0,
+        2.4
+      ]
+    },
+    {
+      "action": "walk",
+      "direction": "S",
+      "recorded_frames": 41,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        65.0,
+        65.0
+      ]
+    },
+    {
+      "action": "walk",
+      "direction": "SE",
+      "recorded_frames": 41,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        65.0,
+        65.0
+      ]
+    },
+    {
+      "action": "walk",
+      "direction": "E",
+      "recorded_frames": 41,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        65.0,
+        65.0
+      ]
+    },
+    {
+      "action": "walk",
+      "direction": "NE",
+      "recorded_frames": 41,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        65.0,
+        65.0
+      ]
+    },
+    {
+      "action": "walk",
+      "direction": "N",
+      "recorded_frames": 41,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        65.0,
+        65.0
+      ]
+    },
+    {
+      "action": "walk",
+      "direction": "NW",
+      "recorded_frames": 41,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        65.0,
+        65.0
+      ]
+    },
+    {
+      "action": "walk",
+      "direction": "W",
+      "recorded_frames": 41,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        65.0,
+        65.0
+      ]
+    },
+    {
+      "action": "walk",
+      "direction": "SW",
+      "recorded_frames": 41,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        65.0,
+        65.0
+      ]
+    },
+    {
+      "action": "run",
+      "direction": "S",
+      "recorded_frames": 21,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        280.0,
+        280.0
+      ]
+    },
+    {
+      "action": "run",
+      "direction": "SE",
+      "recorded_frames": 21,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        280.0,
+        280.0
+      ]
+    },
+    {
+      "action": "run",
+      "direction": "E",
+      "recorded_frames": 21,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        280.0,
+        280.0
+      ]
+    },
+    {
+      "action": "run",
+      "direction": "NE",
+      "recorded_frames": 21,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        280.0,
+        280.0
+      ]
+    },
+    {
+      "action": "run",
+      "direction": "N",
+      "recorded_frames": 21,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        280.0,
+        280.0
+      ]
+    },
+    {
+      "action": "run",
+      "direction": "NW",
+      "recorded_frames": 21,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        280.0,
+        280.0
+      ]
+    },
+    {
+      "action": "run",
+      "direction": "W",
+      "recorded_frames": 21,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        280.0,
+        280.0
+      ]
+    },
+    {
+      "action": "run",
+      "direction": "SW",
+      "recorded_frames": 21,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        280.0,
+        280.0
+      ]
+    },
+    {
+      "action": "roll",
+      "direction": "S",
+      "recorded_frames": 49,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        0.0,
+        220.0
+      ]
+    },
+    {
+      "action": "roll",
+      "direction": "SE",
+      "recorded_frames": 49,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        0.0,
+        220.0
+      ]
+    },
+    {
+      "action": "roll",
+      "direction": "E",
+      "recorded_frames": 49,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        0.0,
+        220.0
+      ]
+    },
+    {
+      "action": "roll",
+      "direction": "NE",
+      "recorded_frames": 49,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        0.0,
+        220.0
+      ]
+    },
+    {
+      "action": "roll",
+      "direction": "N",
+      "recorded_frames": 49,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        0.0,
+        220.0
+      ]
+    },
+    {
+      "action": "roll",
+      "direction": "NW",
+      "recorded_frames": 49,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        0.0,
+        220.0
+      ]
+    },
+    {
+      "action": "roll",
+      "direction": "W",
+      "recorded_frames": 49,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        0.0,
+        220.0
+      ]
+    },
+    {
+      "action": "roll",
+      "direction": "SW",
+      "recorded_frames": 49,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        0.0,
+        220.0
+      ]
+    },
+    {
+      "action": "jump",
+      "direction": "S",
+      "recorded_frames": 43,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "action": "jump",
+      "direction": "SE",
+      "recorded_frames": 43,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "action": "jump",
+      "direction": "E",
+      "recorded_frames": 43,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "action": "jump",
+      "direction": "NE",
+      "recorded_frames": 43,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "action": "jump",
+      "direction": "N",
+      "recorded_frames": 43,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "action": "jump",
+      "direction": "NW",
+      "recorded_frames": 43,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "action": "jump",
+      "direction": "W",
+      "recorded_frames": 43,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "action": "jump",
+      "direction": "SW",
+      "recorded_frames": 43,
+      "source_poses": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "speed_range": [
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "moving_transitions": [
+    {
+      "entry": "walk",
+      "action": "roll",
+      "return": "walk",
+      "direction": "E",
+      "source_poses": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "animation": "roll_move_e"
+    },
+    {
+      "entry": "walk",
+      "action": "jump",
+      "return": "walk",
+      "direction": "E",
+      "source_poses": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "animation": "jump_move_e"
+    },
+    {
+      "entry": "run",
+      "action": "roll",
+      "return": "run",
+      "direction": "E",
+      "source_poses": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "animation": "roll_move_e"
+    },
+    {
+      "entry": "run",
+      "action": "jump",
+      "return": "run",
+      "direction": "E",
+      "source_poses": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "animation": "jump_move_e"
+    }
+  ],
+  "gallery": {
+    "directions": [
+      "s",
+      "se",
+      "e",
+      "ne",
+      "n",
+      "nw",
+      "w",
+      "sw"
+    ],
+    "fps": 30,
+    "frames": {
+      "idle": 96,
+      "jump": 44,
+      "roll": 50,
+      "run": 22,
+      "walk": 38
+    },
+    "source": "actual Godot shader renders"
+  },
+  "original_image_sha256": "ed59a3fbfe706d143ef867b18b8fcc1b19e0c7ae296704b46e63dbf89bea55dd",
+  "chapters": [
+    {
+      "id": "idle_s",
+      "start_seconds": 1.46666666666667
+    },
+    {
+      "id": "idle_se",
+      "start_seconds": 5.3
+    },
+    {
+      "id": "idle_e",
+      "start_seconds": 9.13333333333333
+    },
+    {
+      "id": "idle_ne",
+      "start_seconds": 12.9666666666667
+    },
+    {
+      "id": "idle_n",
+      "start_seconds": 16.8
+    },
+    {
+      "id": "idle_nw",
+      "start_seconds": 20.6333333333333
+    },
+    {
+      "id": "idle_w",
+      "start_seconds": 24.4666666666667
+    },
+    {
+      "id": "idle_sw",
+      "start_seconds": 28.3
+    },
+    {
+      "id": "walk_s",
+      "start_seconds": 32.1333333333333
+    },
+    {
+      "id": "walk_se",
+      "start_seconds": 33.9666666666667
+    },
+    {
+      "id": "walk_e",
+      "start_seconds": 35.8
+    },
+    {
+      "id": "walk_ne",
+      "start_seconds": 37.6333333333333
+    },
+    {
+      "id": "walk_n",
+      "start_seconds": 39.4666666666667
+    },
+    {
+      "id": "walk_nw",
+      "start_seconds": 41.3
+    },
+    {
+      "id": "walk_w",
+      "start_seconds": 43.1333333333333
+    },
+    {
+      "id": "walk_sw",
+      "start_seconds": 44.9666666666667
+    },
+    {
+      "id": "run_s",
+      "start_seconds": 46.8
+    },
+    {
+      "id": "run_se",
+      "start_seconds": 48.0333333333333
+    },
+    {
+      "id": "run_e",
+      "start_seconds": 49.2666666666667
+    },
+    {
+      "id": "run_ne",
+      "start_seconds": 50.5
+    },
+    {
+      "id": "run_n",
+      "start_seconds": 51.7333333333333
+    },
+    {
+      "id": "run_nw",
+      "start_seconds": 52.9666666666667
+    },
+    {
+      "id": "run_w",
+      "start_seconds": 54.2
+    },
+    {
+      "id": "run_sw",
+      "start_seconds": 55.4333333333333
+    },
+    {
+      "id": "roll_s",
+      "start_seconds": 56.6666666666667
+    },
+    {
+      "id": "roll_se",
+      "start_seconds": 59.1
+    },
+    {
+      "id": "roll_e",
+      "start_seconds": 61.5333333333333
+    },
+    {
+      "id": "roll_ne",
+      "start_seconds": 63.9666666666667
+    },
+    {
+      "id": "roll_n",
+      "start_seconds": 66.4
+    },
+    {
+      "id": "roll_nw",
+      "start_seconds": 68.8333333333333
+    },
+    {
+      "id": "roll_w",
+      "start_seconds": 71.2666666666667
+    },
+    {
+      "id": "roll_sw",
+      "start_seconds": 73.7
+    },
+    {
+      "id": "jump_s",
+      "start_seconds": 76.1333333333333
+    },
+    {
+      "id": "jump_se",
+      "start_seconds": 78.3666666666667
+    },
+    {
+      "id": "jump_e",
+      "start_seconds": 80.6
+    },
+    {
+      "id": "jump_ne",
+      "start_seconds": 82.8333333333333
+    },
+    {
+      "id": "jump_n",
+      "start_seconds": 85.0666666666667
+    },
+    {
+      "id": "jump_nw",
+      "start_seconds": 87.3
+    },
+    {
+      "id": "jump_w",
+      "start_seconds": 89.5333333333333
+    },
+    {
+      "id": "jump_sw",
+      "start_seconds": 91.7666666666667
+    },
+    {
+      "id": "walk + roll_e",
+      "start_seconds": 94.0
+    },
+    {
+      "id": "walk + jump_e",
+      "start_seconds": 96.2666666666667
+    },
+    {
+      "id": "run + roll_e",
+      "start_seconds": 98.5333333333333
+    },
+    {
+      "id": "run + jump_e",
+      "start_seconds": 100.8
+    }
+  ],
+  "assertion_failures": [],
+  "note": "Position resets occur between labeled takes. Gallery GIFs are rendered by the same Godot sprite shader. Numerical checks supplement visual review."
+}
